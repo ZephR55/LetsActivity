@@ -19,9 +19,10 @@ class BookDetailsFragment: Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        backButton()
+
         binding = FragmentBookdetailsBinding.inflate(inflater,container,false)
         val view = binding.root
+        backButton()
           //fonskiyon cagirilir
         // Inflate the layout for this fragment
         return view

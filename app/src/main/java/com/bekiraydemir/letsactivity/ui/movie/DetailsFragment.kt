@@ -22,10 +22,11 @@ private val args by navArgs<DetailsFragmentArgs>()
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        backButton()
+
 
         binding = FragmentDetailsBinding.inflate(inflater,container,false)
         val view = binding.root
+        backButton()
         // Inflate the layout for this fragment
         return view
     }

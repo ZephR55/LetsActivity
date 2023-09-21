@@ -25,6 +25,7 @@ class MusicDetailsFragment: Fragment() {
 
         binding = FragmentMusicdetailsBinding.inflate(inflater,container,false)
         val view = binding.root
+        backButton()
         // Inflate the layout for this fragment
         return view
     }
@@ -49,14 +50,14 @@ class MusicDetailsFragment: Fragment() {
         //binding.tvName.text = name
         // binding.tvAge.text=age.toString()
     }
-/*
+
     fun backButton(){
         binding.buttonMusic.setOnClickListener{ // geri tusu fonksiyonu
             findNavController().popBackStack()
         }
 
     }
-*/
+
 
 
 
