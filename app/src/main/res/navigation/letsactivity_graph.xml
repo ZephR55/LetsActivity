@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/letsactivity_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.bekiraydemir.letsactivity.ui.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_musicDetailsFragment"
+            app:destination="@id/musicDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_bookDetailsFragment"
+            app:destination="@id/bookDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.bekiraydemir.letsactivity.ui.movie.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="item"
+            app:argType="com.bekiraydemir.letsactivity.model.Movies" />
+    </fragment>
+    <fragment
+        android:id="@+id/musicDetailsFragment"
+        android:name="com.bekiraydemir.letsactivity.ui.music.MusicDetailsFragment"
+        android:label="MusicDetailsFragment" >
+        <argument
+            android:name="musicItem"
+            app:argType="com.bekiraydemir.letsactivity.model.Musics" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookDetailsFragment"
+        android:name="com.bekiraydemir.letsactivity.ui.book.BookDetailsFragment"
+        android:label="BookDetailsFragment" >
+        <argument
+            android:name="bookItem"
+            app:argType="com.bekiraydemir.letsactivity.model.Books" />
+    </fragment>
+
+</navigation>
