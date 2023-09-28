@@ -1,6 +1,7 @@
 package com.bekiraydemir.letsactivity.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +15,16 @@ import com.bekiraydemir.letsactivity.databinding.FragmentHomeBinding
 import com.bekiraydemir.letsactivity.model.Books
 import com.bekiraydemir.letsactivity.model.Movies
 import com.bekiraydemir.letsactivity.model.Musics
+import com.bekiraydemir.letsactivity.retrofit.ApiClient
+import com.bekiraydemir.letsactivity.retrofit.ApiResponse
+import com.bekiraydemir.letsactivity.retrofit.PostMovie
+import com.bekiraydemir.letsactivity.retrofit.PostService
 import com.bekiraydemir.letsactivity.ui.home.adapters.BookAdapter
 import com.bekiraydemir.letsactivity.ui.home.adapters.MovieAdapter
 import com.bekiraydemir.letsactivity.ui.home.adapters.MusicAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class HomeFragment : Fragment() {
@@ -26,7 +34,8 @@ class HomeFragment : Fragment() {
     private lateinit var movieList: ArrayList<Movies>
     private lateinit var musicList: ArrayList<Musics>
     private lateinit var bookList: ArrayList<Books>
-
+    lateinit var postService: PostService
+    lateinit var postList: MutableList<PostMovie>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,8 +47,30 @@ class HomeFragment : Fragment() {
         showMovieList()
         showBookList()
 
+        postService = ApiClient.getClient().create(PostService::class.java)
+        var post = postService.listPost()
+        post.enqueue(object : Callback<ApiResponse>{
+
+
+            override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+                if(response.isSuccessful){
+                    Log.e("DATA",response.body().toString())
+                }
+                else {
+                    Toast.makeText(requireContext(), call.toString(), Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                Toast.makeText(requireContext(), t.message.toString(), Toast.LENGTH_LONG).show()
+            }
+
+        })
+
         return binding.root
-    }
+
+
+        }
 
 
     private fun showMovieList() {
