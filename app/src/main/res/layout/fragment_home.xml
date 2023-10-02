@@ -10,7 +10,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Movies"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
@@ -24,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Musics"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBaseline_toTopOf="@id/recycler2"/>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -38,6 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Books"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBaseline_toTopOf="@id/recycler3"/>
 
     <androidx.recyclerview.widget.RecyclerView

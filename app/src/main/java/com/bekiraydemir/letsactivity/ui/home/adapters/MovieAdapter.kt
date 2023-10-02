@@ -29,7 +29,7 @@ class MovieAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieHolder, position: Int) {
-        Glide.with(context).load(movieList[position].image)
+        Glide.with(context).load(movieList[position].image).into(holder.binding.movie)
        // holder.binding.movie.setImageResource(movieList[position].image)
         holder.binding.movieName.text = movieList[position].moviename
         holder.binding.movieLayout.setOnClickListener {

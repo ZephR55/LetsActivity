@@ -52,7 +52,7 @@ class HomeFragment : Fragment() {
 
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                 if(response.isSuccessful){
-                    lateinit var postList: ArrayList<Movies>
+                    val postList:ArrayList<Movies> = arrayListOf()
                     Log.e("DATA",response.body().toString())
                     response.body()?.results?.forEach {
                         postList.add(
