@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bekiraydemir.letsactivity.R
@@ -17,7 +16,6 @@ import com.bekiraydemir.letsactivity.model.Movies
 import com.bekiraydemir.letsactivity.model.Musics
 import com.bekiraydemir.letsactivity.retrofit.ApiClient
 import com.bekiraydemir.letsactivity.retrofit.ApiResponse
-import com.bekiraydemir.letsactivity.retrofit.PostMovie
 import com.bekiraydemir.letsactivity.retrofit.PostService
 import com.bekiraydemir.letsactivity.ui.home.adapters.BookAdapter
 import com.bekiraydemir.letsactivity.ui.home.adapters.MovieAdapter
@@ -35,7 +33,7 @@ class HomeFragment : Fragment() {
     private lateinit var musicList: ArrayList<Musics>
     private lateinit var bookList: ArrayList<Books>
     lateinit var postService: PostService
-    lateinit var postList: MutableList<PostMovie>
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,7 +42,7 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater)
 
         showMusicList()
-        showMovieList()
+
         showBookList()
 
         postService = ApiClient.getClient().create(PostService::class.java)
@@ -54,7 +52,20 @@ class HomeFragment : Fragment() {
 
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                 if(response.isSuccessful){
+                    lateinit var postList: ArrayList<Movies>
                     Log.e("DATA",response.body().toString())
+                    response.body()?.results?.forEach {
+                        postList.add(
+                            Movies(
+                                moviename = it.originalTitle.toString(),
+                                releasedate = it.releaseDate.toString(),
+                                image =  "https://image.tmdb.org/t/p/w342"+it.posterPath,
+                                category = "",
+                            )
+                        )
+                    }
+                    response.body()?.results?.get(0)?.originalTitle?.let { Toast.makeText(context, it, Toast.LENGTH_SHORT).show()}
+                        showMovieList(postList)
                 }
                 else {
                     Toast.makeText(requireContext(), call.toString(), Toast.LENGTH_LONG).show()
@@ -73,12 +84,14 @@ class HomeFragment : Fragment() {
         }
 
 
-    private fun showMovieList() {
+    private fun showMovieList(postList: ArrayList<Movies>) {
         movieList = ArrayList()
 
 
-        //Data
 
+
+        //Data
+        /*
         val ironman = Movies("IronMan", "May 2,2008", R.drawable.ironman1, "Movie")
         val hulk = Movies("Hulk", "June 13,2008", R.drawable.hulk1, "Movie")
         val walle = Movies("Wall-E", "September 25,2008", R.drawable.walle, "Movie")
@@ -94,10 +107,12 @@ class HomeFragment : Fragment() {
         movieList.add(monsterinc)
         movieList.add(interstellar)
         movieList.add(avengers)
+        */
 
 
-        val movieAdapter = MovieAdapter(movieList) { position ->// Onclick Fonksiyonu
-             val movie = movieList[position]
+
+        val movieAdapter = MovieAdapter(requireContext(),postList) { position ->// Onclick Fonksiyonu
+             val movie = postList[position]
              val action = HomeFragmentDirections.actionHomeFragmentToDetailsFragment(
               movie )
             findNavController().navigate(action)
